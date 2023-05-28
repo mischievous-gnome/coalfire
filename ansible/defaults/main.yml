@@ -1,0 +1,9 @@
+blocked_accounts:
+  - Guests
+  - Users
+  - Administrators
+
+harden_win_asr_config:
+  # Block Office applications from creating child processes
+  - { ruleid: 'D4F940AB-401B-4EFC-AADC-AD5F3C50688A', action: 'Enabled' }
+

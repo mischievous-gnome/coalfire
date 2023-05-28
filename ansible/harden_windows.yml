@@ -1,0 +1,14 @@
+name: Harden Windows hosts
+hosts: win_server 
+remote_user: ansible_svc
+
+tasks:
+  - name: Replace the entries of Deny log on locally
+   ansible.windows.win_user_right:
+     name: SeDenyInteractiveLogonRight
+     users: "{{ blocked_accounts }}"
+     action: set
+
+  - name: Enable Windows Attack Surface Reduction (ASR) rules
+  ansible.windows.win_shell: Add-MpPreference -AttackSurfaceReductionRules_Ids {{ item.ruleid }} -AttackSurfaceReductionRules_Actions {{ item.action }}
+  with_items: "{{ harden_win_asr_config }}"
